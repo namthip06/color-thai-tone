@@ -16,7 +16,8 @@
         $sql = "SELECT * FROM color";
         if(isset($_POST['search-text'])) {
             $search = mysqli_real_escape_string($connect, $_POST['search-text']);
-            $sql .= " WHERE name LIKE '%".$search."%' ";
+            $sql = "SELECT DISTINCT * FROM color WHERE name LIKE '%".$search."%' ";
+            //$sql .= " WHERE name LIKE '%".$search."%' GROUP BY name HAVING COUNT(name) > 0";
         }
         $result = mysqli_query($connect, $sql);
         $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -51,5 +52,10 @@
             <?php endforeach; ?>
         </div>
     </form>
+    <?php
+    echo "<pre>";
+    print_r($rows);
+    echo "</pre>";
+    ?>
 </body>
 </html>
